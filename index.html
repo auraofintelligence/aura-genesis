@@ -38,9 +38,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Placeholder for generative fractal map */
-            background: var(--dark-bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="f" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.5" /></filter></defs><circle cx="50" cy="50" r="1" fill="%23a0a0c0" opacity="0.2" filter="url(%23f)" /></svg>') repeat;
-            background-size: 100px 100px;
+            background: var(--dark-bg);
             animation: pulse 20s infinite alternate;
         }
 
@@ -67,6 +65,14 @@
             text-shadow: 0 0 15px var(--primary-glow);
             margin-bottom: 2rem;
         }
+        
+        .header .subtext {
+            max-width: 700px;
+            margin: 0 auto;
+            color: var(--text-secondary);
+            font-size: 1.1rem; /* Increased font size */
+            font-weight: 400; /* Normal weight */
+        }
 
         .adventure-doors {
             display: flex;
@@ -83,6 +89,8 @@
             text-transform: uppercase;
             font-weight: bold;
             box-shadow: inset 0 0 10px 0 var(--primary-glow);
+            text-decoration: none;
+            color: var(--text-primary);
         }
         .door:hover {
             background-color: var(--primary-glow);
@@ -132,14 +140,35 @@
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
             padding: 0 1.5rem;
+            color: var(--text-primary); /* Readability Fix */
         }
         .expandable-content p {
             margin-bottom: 1rem;
-            color: var(--text-secondary);
         }
         .expandable-section.open .expandable-content {
             padding: 1.5rem;
             max-height: 1000px; /* Adjust as needed */
+        }
+        
+        .expandable-content a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .expandable-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .aura-builder-showcase {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+        
+        .aura-builder-showcase img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--light-bg);
         }
 
         .geode-preview {
@@ -153,17 +182,15 @@
             text-align: center;
             font-style: italic;
             color: var(--text-secondary);
-            /* Placeholder for looping video */
             border: 1px solid var(--light-bg);
         }
         
         .audio-player {
             margin-top: 2rem;
-            background-color: var(--light-bg);
+            background-color: var(--dark-bg);
             padding: 1rem;
             border-radius: 8px;
             text-align: center;
-            /* Placeholder for audio embed */
         }
         
         .registration-form {
@@ -223,7 +250,6 @@
             background-color: var(--light-bg);
             border-radius: 8px;
             position: relative;
-            /* Placeholder for world map */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -254,23 +280,33 @@
         .footer {
             text-align: center;
             padding: 4rem 0;
+            color: var(--text-secondary);
         }
         
-        .go-bag-link {
-            display: inline-block;
-            border: 1px solid var(--accent);
-            padding: 1rem 2rem;
+        .footer-links {
             margin-bottom: 2rem;
-            color: var(--accent);
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            align-items: center;
+        }
+        
+        .footer-links a {
+            color: var(--text-secondary);
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: color 0.3s ease;
         }
         
-        .go-bag-link:hover {
-            background-color: var(--accent);
-            color: var(--dark-bg);
+        .footer-links a:hover {
+            color: var(--primary-glow);
         }
         
+        .footer-links svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+
         #toTopBtn {
             display: none;
             position: fixed;
@@ -298,7 +334,7 @@
 </head>
 <body>
 
-    <div id="fractal-background"></div>
+    <canvas id="fractal-background"></canvas>
 
     <button id="toTopBtn" title="Go to top">↑</button>
 
@@ -307,10 +343,10 @@
         <header class="header">
             <p id="days-since-launch" style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; text-shadow: 0 0 10px var(--accent); color: var(--accent);">Day 0: The Genesis Block</p>
             <h1>What if healing yourself could help heal the world?</h1>
-            <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">An invitation to an infinite game. A pathway to Protopia—a state of continuous improvement, where we strive to make each day better than the last, creating a compounding effect that improves reality for everyone and the environment.</p>
+            <p class="subtext">This is an invitation to an infinite game. Not a perfect Utopia, nor a surrender to Dystopia, but a pathway to Protopia—a state of continuous, incremental improvement, where everyone is striving to make each day better than the last, as often as possible, resulting in a compounding effect that improves reality for everyone and the environment.</p>
             <div class="adventure-doors">
-                <a href="#tech" class="door">Explore the Tech</a>
                 <a href="#journey" class="door">Understand the Journey</a>
+                <a href="#tech" class="door">Explore the Engine</a>
                 <a href="#movement" class="door">Join the Movement</a>
             </div>
         </header>
@@ -335,7 +371,12 @@
                     <div class="expandable-summary">"Aura Lite": The Open Gate</div>
                     <div class="expandable-content">
                         <p>For most, the journey begins with a simple, mobile-first experience. Create a baseline Digital Twin with our intuitive apps for memory mapping and self-reflection. You can then add granular detail with your own biometric wearables (BYOD) like smart watches or consumer EEGs.</p>
-                        <div style="text-align:center; padding: 2rem; font-style:italic; color: var(--text-secondary);">[ Placeholder: Animated graphic showing Brainwave, Heart, and Text icons connecting to a central "Digital Twin" ]</div>
+                        <div class="aura-builder-showcase">
+                            <a href="https://auraofintelligence.github.io/aura-components/" target="_blank" rel="noopener noreferrer">
+                                <img src="https://i.imgur.com/8F2aW1g.png" alt="Aura Builder Toy Showcase">
+                            </a>
+                            <p style="font-size: 0.9rem; margin-top: 1rem;">Begin building your own Aura with our early-stage builder tool.</p>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -359,9 +400,15 @@
             <section id="movement" class="section">
                 <h2 class="section-title">The Infinite Game</h2>
                  <div class="expandable-section">
-                    <div class="expandable-summary">The Catalyst Protocol & The Queens VC</div>
+                    <div class="expandable-summary">The Catalyst Protocol</div>
                     <div class="expandable-content">
-                        <p>The goal is to transform our finite civilizational game into an infinite one. After your own journey, you can unlock the "Millionaire/Billionaire Aura" protocols—game loops designed to train you as a "Catalyst" for large-scale positive impact. This ecosystem is fueled by the 500 Queens VC, a fund dedicated to investing exclusively in the women-led startups that emerge from this network to correct the global funding disparity.</p>
+                        <p>The goal is to transform our finite civilizational game into an infinite one. After your own journey, you can unlock the "Millionaire/Billionaire Aura" protocols—game loops designed to train you as a "Catalyst" for large-scale positive impact.</p>
+                    </div>
+                </div>
+                 <div class="expandable-section">
+                    <div class="expandable-summary">The 500 Queens VC: Fueling the Future</div>
+                    <div class="expandable-content">
+                        <p>Our ecosystem's economic engine. A global fund dedicated to correcting the &lt;3% VC funding disparity by investing exclusively in the women-led startups that emerge from our network. <a href="https://auraofintelligence.github.io/Queens_Venture/" target="_blank" rel="noopener noreferrer">[Explore the Queens Venture Blueprint]</a></p>
                     </div>
                 </div>
                 <div class="world-map">
@@ -382,18 +429,15 @@
                             <option value="partner">Partner with Us</option>
                         </select>
                     </div>
-
                     <div class="form-group">
                         <label for="email">Your Email</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    
                     <div id="developer-options" class="form-group hidden">
                          <label for="device-reg">Help our dev team:</label>
                          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Register your device to help us test and validate the BYOD integration. We'll send you details.</p>
                          <input type="text" id="device-reg" name="device-reg" placeholder="e.g., Apple Watch Series 9, Muse S">
                     </div>
-
                     <div id="catalyst-options" class="form-group hidden">
                         <label for="pledge">The "Millionaire Aura" Pre-Pledge (Optional)</label>
                         <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Declare your interest in using the Catalyst Protocol to impact one million lives.</p>
@@ -405,33 +449,96 @@
                             <option value="community">Community & Governance</option>
                         </select>
                     </div>
-                    
                     <div id="fractal-seed" class="form-group hidden">
                          <label for="location">Seed a Local Fractal (Optional)</label>
                          <input type="text" id="location" name="location" placeholder="Your City, Country">
                     </div>
-
                     <button type="submit" class="submit-btn">Register for the Journey</button>
                 </form>
                  <div id="form-success" class="hidden" style="text-align: center; margin-top: 2rem; color: var(--accent);">
                     <p>Thank you. Your inquiry has been logged. The journey has begun.</p>
                 </div>
             </section>
-
         </main>
 
         <footer class="footer">
-             <a href="#" id="go-bag-link" class="go-bag-link">Download The Catalyst's Go-Bag</a>
-             <p style="color: var(--text-secondary);">© <span id="year"></span> Alpha Infinity Foundation. An Infinite Game.</p>
-             <p style="font-size: 0.8rem; margin-top: 1rem; color: var(--text-secondary);"><a href="#" style="color: var(--text-secondary);">[ Future Store Link: Aura Travel Kits ]</a></p>
+            <div class="footer-links">
+                <a href="https://github.com/auraofintelligence" target="_blank" rel="noopener noreferrer" title="GitHub">
+                    <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+                <a href="#" id="discord-link" title="Discord">
+                    <svg viewBox="0 0 24 24"><path d="M20.317 4.3698c-1.315-1.43-3.102-2.3-5.04-2.4498-.022.056-.042.113-.062.1698-1.575.4898-3.033 1.2298-4.324 2.1698-1.922.2-3.71.93-5.078 2.2298-3.04 3.25-3.664 7.63-1.764 11.5398.24.5098.53.9898.87 1.4398 1.575 1.95 3.57 3.22 5.76 3.9398.052.02.104.03.156.04.546.19 1.114.33 1.696.42 1.95.29 3.943.02 5.8-.82-1.252-.47-2.44-1.12-3.535-1.95-.02-.01-.04-.02-.06-.03-.21-.08-.42-.18-.62-.27-.25-.11-.5-.22-.75-.33-1.166-.52-2.26-1.2-3.22-2.05-.28-.24-.55-.5-.81-.76-.04-.04-.08-.08-.12-.12-.01-.01-.02-.02-.03-.03-.33-.29-.63-.6-.9-.92-.23-.26-.45-.52-.65-.8-.11-.15-.2-.3-.3-.45-.02-.03-.04-.06-.06-.09-.07-.13-.14-.26-.2-.4-.01-.02-.02-.04-.03-.06-.05-.1-.09-.2-.13-.3-.02-.05-.04-.1-.06-.15-.03-.08-.06-.16-.09-.24-.01-.03-.02-.06-.03-.09-.03-.08-.05-.16-.08-.24-.03-.09-.06-.18-.08-.27-.01-.02-.01-.04-.02-.06-.04-.13-.08-.26-.12-.39-.02-.07-.04-.14-.06-.21-.02-.07-.03-.14-.05-.21-.02-.08-.04-.16-.06-.24-.02-.08-.03-.16-.05-.24-.02-.09-.04-.18-.06-.27-.01-.03-.01-.05-.02-.08-.04-.17-.08-.34-.12-.51-.02-.08-.04-.17-.06-.25s-.04-.17-.06-.25c-.06-.26-.11-.52-.16-.78-.05-.27-.1-.54-.14-.81-.04-.28-.08-.56-.11-.84-.03-.28-.06-.56-.08-.85-.02-.27-.04-.55-.06-.82-.01-.14-.02-.28-.03-.42-.01-.14-.02-.28-.03-.42-.01-.14-.01-.28-.02-.42s-.01-.28-.02-.42c.01-.14.02-.28.03-.42l.02-.42.03-.42.04-.41.05-.41.06-.4.08-.4.09-.39.1-.38.12-.37.13-.36.15-.35.16-.34.18-.33.19-.32.2-.31.22-.3.23-.29.28-.52.56-1.01 1.25-1.95 2.22-3.22 3.52-4.99z M8.02 15.33c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4zm7.98 0c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4z"/></svg>
+                </a>
+            </div>
+             <p style="font-size: 0.9rem; margin-bottom: 1rem;"><a href="#" id="go-bag-link">[Preview the Aura Odyssey Kits]</a></p>
+             <p>© <span id="year"></span> Alpha Infinity Foundation. An Infinite Game.</p>
+             <p style="font-size: 0.8rem; margin-top: 1rem;">
+                This work is licensed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary);">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+            </p>
         </footer>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
+            // --- Generative Fractal Background ---
+            const canvas = document.getElementById('fractal-background');
+            const ctx = canvas.getContext('2d');
+            let nodes = [];
+            
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            function addNode(x, y) {
+                nodes.push({
+                    x: x || Math.random() * canvas.width,
+                    y: y || Math.random() * canvas.height,
+                    vx: Math.random() * 0.2 - 0.1,
+                    vy: Math.random() * 0.2 - 0.1,
+                    connections: 0
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                nodes.forEach((node, i) => {
+                    node.x += node.vx;
+                    node.y += node.vy;
+
+                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(160, 160, 192, 0.5)`;
+                    ctx.fill();
+
+                    for (let j = i + 1; j < nodes.length; j++) {
+                        const otherNode = nodes[j];
+                        const distance = Math.sqrt(Math.pow(node.x - otherNode.x, 2) + Math.pow(node.y - otherNode.y, 2));
+                        if (distance < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(node.x, node.y);
+                            ctx.lineTo(otherNode.x, otherNode.y);
+                            ctx.strokeStyle = `rgba(0, 242, 255, ${1 - distance / 150})`;
+                            ctx.stroke();
+                        }
+                    }
+                });
+
+                requestAnimationFrame(draw);
+            }
+            
+            window.addEventListener('resize', resizeCanvas);
+            resizeCanvas();
+            for(let i = 0; i < 50; i++) { addNode(); } // Initial nodes
+            draw();
+
             // --- Days Since Launch Counter ---
-            const launchDate = new Date('2025-08-14T00:00:00Z'); // Set the Genesis Block date here
+            const launchDate = new Date('2025-08-14T00:00:00Z');
             const daysCounter = document.getElementById('days-since-launch');
             
             function updateCounter() {
@@ -441,7 +548,7 @@
                 daysCounter.textContent = `Day ${diffDays}: The Weaving Continues`;
             }
             updateCounter();
-            setInterval(updateCounter, 1000 * 60 * 60 * 24); // Update once a day
+            setInterval(updateCounter, 1000 * 60 * 60 * 24);
 
             // --- Smooth Scrolling for Doors ---
             document.querySelectorAll('.door').forEach(anchor => {
@@ -471,8 +578,11 @@
                 const value = e.target.value;
                 developerOptions.classList.add('hidden');
                 catalystOptions.classList.add('hidden');
-                fractalSeed.classList.remove('hidden');
+                fractalSeed.classList.add('hidden');
 
+                if (value) {
+                    fractalSeed.classList.remove('hidden');
+                }
                 if (value === 'developer') {
                     developerOptions.classList.remove('hidden');
                 } else if (value === 'catalyst') {
@@ -485,24 +595,15 @@
             const formSuccess = document.getElementById('form-success');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                // In a real app, this would send data to a server.
-                // Here, we'll just simulate success.
+                const locationInput = document.getElementById('location').value;
+                const location = locationInput ? locationInput.split(',').map(s => s.trim()) : [];
+                
                 console.log('Form submitted:', new FormData(form));
-                form.classList.add('hidden');
+                form.style.display = 'none';
                 formSuccess.classList.remove('hidden');
                 
-                // --- Add a node to the fractal background (simulation) ---
-                const fractalBg = document.getElementById('fractal-background');
-                const newNode = document.createElement('div');
-                newNode.style.position = 'absolute';
-                newNode.style.left = `${Math.random() * 100}%`;
-                newNode.style.top = `${Math.random() * 100}%`;
-                newNode.style.width = '5px';
-                newNode.style.height = '5px';
-                newNode.style.backgroundColor = 'var(--accent)';
-                newNode.style.borderRadius = '50%';
-                newNode.style.boxShadow = '0 0 10px var(--accent)';
-                fractalBg.appendChild(newNode);
+                // Add a new node to the fractal map
+                addNode(Math.random() * canvas.width, Math.random() * canvas.height);
             });
 
             // --- Back to Top Button ---
@@ -521,10 +622,14 @@
             // --- Set Current Year in Footer ---
             document.getElementById('year').textContent = new Date().getFullYear();
             
-            // --- Go-Bag Link Placeholder ---
+            // --- Placeholder Links ---
             document.getElementById('go-bag-link').addEventListener('click', (e) => {
                 e.preventDefault();
                 alert("The Catalyst's Digital Go-Bag will be available soon. It will contain the Master Design Document, art assets, and a link to the community Discord.");
+            });
+            document.getElementById('discord-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("The community Discord is being set up. The link will be live soon!");
             });
 
         });
