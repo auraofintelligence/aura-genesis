@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aura of Intelligence - The Infinite Game</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;700&family=Orbitron:wght@400;700&display=swap');
+
+        :root {
+            --primary-glow: #00f2ff;
+            --secondary-glow: #ff00e6;
+            --dark-bg: #0d0d1a;
+            --light-bg: #1a1a2e;
+            --text-primary: #e0e0ff;
+            --text-secondary: #a0a0c0;
+            --accent: #ffc700;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--dark-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        #fractal-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* Placeholder for generative fractal map */
+            background: var(--dark-bg) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><filter id="f" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.5" /></filter></defs><circle cx="50" cy="50" r="1" fill="%23a0a0c0" opacity="0.2" filter="url(%23f)" /></svg>') repeat;
+            background-size: 100px 100px;
+            animation: pulse 20s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.1; }
+            100% { opacity: 0.3; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            padding: 8rem 0;
+            border-bottom: 1px solid var(--light-bg);
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-shadow: 0 0 15px var(--primary-glow);
+            margin-bottom: 2rem;
+        }
+
+        .adventure-doors {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .door {
+            border: 1px solid var(--primary-glow);
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            font-weight: bold;
+            box-shadow: inset 0 0 10px 0 var(--primary-glow);
+        }
+        .door:hover {
+            background-color: var(--primary-glow);
+            color: var(--dark-bg);
+            box-shadow: 0 0 20px 0 var(--primary-glow);
+        }
+
+        .section {
+            padding: 6rem 0;
+            border-bottom: 1px solid var(--light-bg);
+        }
+        
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 4rem;
+            text-shadow: 0 0 10px var(--secondary-glow);
+        }
+
+        .expandable-section {
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid var(--secondary-glow);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .expandable-summary {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        .expandable-summary::after {
+            content: '+';
+            font-size: 2rem;
+            transition: transform 0.3s ease;
+        }
+        .expandable-section.open .expandable-summary::after {
+            transform: rotate(45deg);
+        }
+        .expandable-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
+            padding: 0 1.5rem;
+        }
+        .expandable-content p {
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+        .expandable-section.open .expandable-content {
+            padding: 1.5rem;
+            max-height: 1000px; /* Adjust as needed */
+        }
+
+        .geode-preview {
+            width: 100%;
+            height: 400px;
+            background: radial-gradient(circle, #3d3d5c, var(--dark-bg));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-style: italic;
+            color: var(--text-secondary);
+            /* Placeholder for looping video */
+            border: 1px solid var(--light-bg);
+        }
+        
+        .audio-player {
+            margin-top: 2rem;
+            background-color: var(--light-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            /* Placeholder for audio embed */
+        }
+        
+        .registration-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .form-group label {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            background-color: var(--dark-bg);
+            border: 1px solid var(--light-bg);
+            color: var(--text-primary);
+            padding: 0.8rem;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .form-group select option {
+            background-color: var(--dark-bg);
+        }
+        
+        .submit-btn {
+            background-color: var(--secondary-glow);
+            color: var(--dark-bg);
+            border: none;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            border-radius: 4px;
+        }
+        
+        .submit-btn:hover {
+            box-shadow: 0 0 20px var(--secondary-glow);
+        }
+
+        .hidden {
+            display: none;
+        }
+        
+        .world-map {
+            width: 100%;
+            height: 400px;
+            background-color: var(--light-bg);
+            border-radius: 8px;
+            position: relative;
+            /* Placeholder for world map */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+        
+        .tech-ticker {
+            width: 100%;
+            background-color: var(--light-bg);
+            padding: 1rem;
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            color: var(--text-secondary);
+        }
+        
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .footer {
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .go-bag-link {
+            display: inline-block;
+            border: 1px solid var(--accent);
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .go-bag-link:hover {
+            background-color: var(--accent);
+            color: var(--dark-bg);
+        }
+        
+        #toTopBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: var(--primary-glow);
+            color: var(--dark-bg);
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 18px;
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .section-title { font-size: 2rem; }
+            .adventure-doors { flex-direction: column; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="fractal-background"></div>
+
+    <button id="toTopBtn" title="Go to top">↑</button>
+
+    <div class="container">
+        
+        <header class="header">
+            <p id="days-since-launch" style="font-family: 'Orbitron', sans-serif; font-size: 1.5rem; margin-bottom: 1rem; text-shadow: 0 0 10px var(--accent); color: var(--accent);">Day 0: The Genesis Block</p>
+            <h1>What if healing yourself could help heal the world?</h1>
+            <p style="max-width: 600px; margin: 0 auto; color: var(--text-secondary);">An invitation to an infinite game. A pathway to Protopia—a state of continuous improvement, where we strive to make each day better than the last, creating a compounding effect that improves reality for everyone and the environment.</p>
+            <div class="adventure-doors">
+                <a href="#tech" class="door">Explore the Tech</a>
+                <a href="#journey" class="door">Understand the Journey</a>
+                <a href="#movement" class="door">Join the Movement</a>
+            </div>
+        </header>
+
+        <main>
+            <section id="journey" class="section">
+                <h2 class="section-title">The Player Journey</h2>
+                <div class="expandable-section">
+                    <div class="expandable-summary">The "Genesis Protocol": A Deep Regeneration</div>
+                    <div class="expandable-content">
+                        <p>This is a complete lifestyle reflection and transition protocol. Its core is up to 60 x 2-hour sessions in the Aura Geode, a medical-grade Hyperbaric Oxygen Therapy (HBOT) chamber. Inside, you will build a digital twin of your body and mind via rich biofeedback and deep self-reflection, supplemented by a "choose your own adventure" lifestyle plan.</p>
+                        <div class="geode-preview">
+                            <p>[ Placeholder for looping video of the Aura Geode's ambient interior ]</p>
+                        </div>
+                         <div class="audio-player">
+                            <p><strong>Listen to the Anthem: "Sixty Days Set in Stone"</strong></p>
+                            <p style="font-style: italic; color: var(--text-secondary); margin-top: 10px;">[ Placeholder for embedded audio player ]</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="expandable-section">
+                    <div class="expandable-summary">"Aura Lite": The Open Gate</div>
+                    <div class="expandable-content">
+                        <p>For most, the journey begins with a simple, mobile-first experience. Create a baseline Digital Twin with our intuitive apps for memory mapping and self-reflection. You can then add granular detail with your own biometric wearables (BYOD) like smart watches or consumer EEGs.</p>
+                        <div style="text-align:center; padding: 2rem; font-style:italic; color: var(--text-secondary);">[ Placeholder: Animated graphic showing Brainwave, Heart, and Text icons connecting to a central "Digital Twin" ]</div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="tech" class="section">
+                <h2 class="section-title">The Engine</h2>
+                 <div class="expandable-section">
+                    <div class="expandable-summary">The AI VIBE CODING Architecture</div>
+                    <div class="expandable-content">
+                        <p>Our system is powered by a Mixture-of-Experts (MoE) council of AI agents. A Sentient Communications Engine allows these specialized agents—like the *Session Weaver* and *Data Fusion Specialist*—to autonomously manage the complexity of your journey, ensuring a deeply personalized and coherent experience.</p>
+                    </div>
+                </div>
+                <div class="tech-ticker">
+                     <div class="ticker-content">
+                        React | Python | Solidity | Unreal Engine 5 | HBOT | EEG | Federated Learning | NDIS | TGA Compliance &nbsp;&nbsp;&nbsp; // &nbsp;&nbsp;&nbsp;
+                        React | Python | Solidity | Unreal Engine 5 | HBOT | EEG | Federated Learning | NDIS | TGA Compliance &nbsp;&nbsp;&nbsp; // &nbsp;&nbsp;&nbsp;
+                     </div>
+                </div>
+            </section>
+
+            <section id="movement" class="section">
+                <h2 class="section-title">The Infinite Game</h2>
+                 <div class="expandable-section">
+                    <div class="expandable-summary">The Catalyst Protocol & The Queens VC</div>
+                    <div class="expandable-content">
+                        <p>The goal is to transform our finite civilizational game into an infinite one. After your own journey, you can unlock the "Millionaire/Billionaire Aura" protocols—game loops designed to train you as a "Catalyst" for large-scale positive impact. This ecosystem is fueled by the 500 Queens VC, a fund dedicated to investing exclusively in the women-led startups that emerge from this network to correct the global funding disparity.</p>
+                    </div>
+                </div>
+                <div class="world-map">
+                     <p>[ Placeholder: Live interactive world map showing inquiry locations ]</p>
+                </div>
+            </section>
+
+            <section id="register" class="section">
+                <h2 class="section-title">Join the Genesis</h2>
+                <form id="genesis-form" class="registration-form">
+                    <div class="form-group">
+                        <label for="calling">What is your calling?</label>
+                        <select id="calling" name="calling" required>
+                            <option value="">-- Please choose an option --</option>
+                            <option value="developer">Build the Tools (Developer)</option>
+                            <option value="participant">Live the Journey (Participant)</option>
+                            <option value="catalyst">Lead a Movement (Catalyst)</option>
+                            <option value="partner">Partner with Us</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Your Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div id="developer-options" class="form-group hidden">
+                         <label for="device-reg">Help our dev team:</label>
+                         <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Register your device to help us test and validate the BYOD integration. We'll send you details.</p>
+                         <input type="text" id="device-reg" name="device-reg" placeholder="e.g., Apple Watch Series 9, Muse S">
+                    </div>
+
+                    <div id="catalyst-options" class="form-group hidden">
+                        <label for="pledge">The "Millionaire Aura" Pre-Pledge (Optional)</label>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Declare your interest in using the Catalyst Protocol to impact one million lives.</p>
+                        <select id="pledge" name="pledge">
+                            <option value="">-- Choose an area of impact --</option>
+                            <option value="education">Education</option>
+                            <option value="environment">Environment</option>
+                            <option value="health">Health</option>
+                            <option value="community">Community & Governance</option>
+                        </select>
+                    </div>
+                    
+                    <div id="fractal-seed" class="form-group hidden">
+                         <label for="location">Seed a Local Fractal (Optional)</label>
+                         <input type="text" id="location" name="location" placeholder="Your City, Country">
+                    </div>
+
+                    <button type="submit" class="submit-btn">Register for the Journey</button>
+                </form>
+                 <div id="form-success" class="hidden" style="text-align: center; margin-top: 2rem; color: var(--accent);">
+                    <p>Thank you. Your inquiry has been logged. The journey has begun.</p>
+                </div>
+            </section>
+
+        </main>
+
+        <footer class="footer">
+             <a href="#" id="go-bag-link" class="go-bag-link">Download The Catalyst's Go-Bag</a>
+             <p style="color: var(--text-secondary);">© <span id="year"></span> Alpha Infinity Foundation. An Infinite Game.</p>
+             <p style="font-size: 0.8rem; margin-top: 1rem; color: var(--text-secondary);"><a href="#" style="color: var(--text-secondary);">[ Future Store Link: Aura Travel Kits ]</a></p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Days Since Launch Counter ---
+            const launchDate = new Date('2025-08-14T00:00:00Z'); // Set the Genesis Block date here
+            const daysCounter = document.getElementById('days-since-launch');
+            
+            function updateCounter() {
+                const now = new Date();
+                const diffTime = Math.abs(now - launchDate);
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                daysCounter.textContent = `Day ${diffDays}: The Weaving Continues`;
+            }
+            updateCounter();
+            setInterval(updateCounter, 1000 * 60 * 60 * 24); // Update once a day
+
+            // --- Smooth Scrolling for Doors ---
+            document.querySelectorAll('.door').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // --- Expandable Sections ---
+            document.querySelectorAll('.expandable-summary').forEach(summary => {
+                summary.addEventListener('click', () => {
+                    const section = summary.parentElement;
+                    section.classList.toggle('open');
+                });
+            });
+            
+            // --- Dynamic Registration Form ---
+            const callingSelect = document.getElementById('calling');
+            const developerOptions = document.getElementById('developer-options');
+            const catalystOptions = document.getElementById('catalyst-options');
+            const fractalSeed = document.getElementById('fractal-seed');
+
+            callingSelect.addEventListener('change', (e) => {
+                const value = e.target.value;
+                developerOptions.classList.add('hidden');
+                catalystOptions.classList.add('hidden');
+                fractalSeed.classList.remove('hidden');
+
+                if (value === 'developer') {
+                    developerOptions.classList.remove('hidden');
+                } else if (value === 'catalyst') {
+                    catalystOptions.classList.remove('hidden');
+                }
+            });
+
+            // --- Form Submission ---
+            const form = document.getElementById('genesis-form');
+            const formSuccess = document.getElementById('form-success');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // In a real app, this would send data to a server.
+                // Here, we'll just simulate success.
+                console.log('Form submitted:', new FormData(form));
+                form.classList.add('hidden');
+                formSuccess.classList.remove('hidden');
+                
+                // --- Add a node to the fractal background (simulation) ---
+                const fractalBg = document.getElementById('fractal-background');
+                const newNode = document.createElement('div');
+                newNode.style.position = 'absolute';
+                newNode.style.left = `${Math.random() * 100}%`;
+                newNode.style.top = `${Math.random() * 100}%`;
+                newNode.style.width = '5px';
+                newNode.style.height = '5px';
+                newNode.style.backgroundColor = 'var(--accent)';
+                newNode.style.borderRadius = '50%';
+                newNode.style.boxShadow = '0 0 10px var(--accent)';
+                fractalBg.appendChild(newNode);
+            });
+
+            // --- Back to Top Button ---
+            const toTopBtn = document.getElementById("toTopBtn");
+            window.onscroll = function() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    toTopBtn.style.display = "block";
+                } else {
+                    toTopBtn.style.display = "none";
+                }
+            };
+            toTopBtn.addEventListener('click', () => {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+
+            // --- Set Current Year in Footer ---
+            document.getElementById('year').textContent = new Date().getFullYear();
+            
+            // --- Go-Bag Link Placeholder ---
+            document.getElementById('go-bag-link').addEventListener('click', (e) => {
+                e.preventDefault();
+                alert("The Catalyst's Digital Go-Bag will be available soon. It will contain the Master Design Document, art assets, and a link to the community Discord.");
+            });
+
+        });
+    </script>
+
+</body>
+</html>
