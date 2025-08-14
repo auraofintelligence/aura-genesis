@@ -15,6 +15,7 @@
             --text-primary: #e0e0ff;
             --text-secondary: #a0a0c0;
             --accent: #ffc700;
+            --link-color: #87CEEB; /* Sky Blue */
         }
 
         * {
@@ -27,7 +28,8 @@
             font-family: 'Roboto Mono', monospace;
             background-color: var(--dark-bg);
             color: var(--text-primary);
-            line-height: 1.6;
+            line-height: 1.7; /* Increased line-height for readability */
+            font-size: 16px; /* Base font size */
             overflow-x: hidden;
         }
         
@@ -52,6 +54,16 @@
             margin: 0 auto;
             padding: 2rem;
         }
+        
+        a {
+            color: var(--link-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: var(--primary-glow);
+            text-decoration: underline;
+        }
 
         .header {
             text-align: center;
@@ -67,11 +79,11 @@
         }
         
         .header .subtext {
-            max-width: 700px;
+            max-width: 750px; /* Wider for bigger text */
             margin: 0 auto;
             color: var(--text-secondary);
-            font-size: 1.1rem; /* Increased font size */
-            font-weight: 400; /* Normal weight */
+            font-size: 1.2rem; /* Increased font size */
+            font-weight: 400;
         }
 
         .adventure-doors {
@@ -89,8 +101,6 @@
             text-transform: uppercase;
             font-weight: bold;
             box-shadow: inset 0 0 10px 0 var(--primary-glow);
-            text-decoration: none;
-            color: var(--text-primary);
         }
         .door:hover {
             background-color: var(--primary-glow);
@@ -140,35 +150,22 @@
             overflow: hidden;
             transition: max-height 0.5s ease-out, padding 0.5s ease-out;
             padding: 0 1.5rem;
-            color: var(--text-primary); /* Readability Fix */
+            color: var(--text-primary);
+            font-size: 1.1rem; /* Increased text size */
         }
         .expandable-content p {
             margin-bottom: 1rem;
         }
         .expandable-section.open .expandable-content {
             padding: 1.5rem;
-            max-height: 1000px; /* Adjust as needed */
-        }
-        
-        .expandable-content a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: bold;
-        }
-        .expandable-content a:hover {
-            text-decoration: underline;
-        }
-        
-        .aura-builder-showcase {
-            margin-top: 1.5rem;
-            text-align: center;
+            max-height: 1000px; 
         }
         
         .aura-builder-showcase img {
             max-width: 100%;
             height: auto;
             border-radius: 8px;
-            border: 1px solid var(--light-bg);
+            border: 1px solid var(--dark-bg);
         }
 
         .geode-preview {
@@ -193,15 +190,10 @@
             text-align: center;
         }
         
-        .registration-form {
+        .registration-form, .form-group {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
         }
         
         .form-group label {
@@ -217,10 +209,7 @@
             padding: 0.8rem;
             border-radius: 4px;
             font-family: 'Roboto Mono', monospace;
-        }
-
-        .form-group select option {
-            background-color: var(--dark-bg);
+            font-size: 1rem;
         }
         
         .submit-btn {
@@ -240,9 +229,7 @@
             box-shadow: 0 0 20px var(--secondary-glow);
         }
 
-        .hidden {
-            display: none;
-        }
+        .hidden { display: none; }
         
         .world-map {
             width: 100%;
@@ -291,16 +278,6 @@
             align-items: center;
         }
         
-        .footer-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-        
-        .footer-links a:hover {
-            color: var(--primary-glow);
-        }
-        
         .footer-links svg {
             width: 24px;
             height: 24px;
@@ -326,6 +303,7 @@
 
         @media (max-width: 768px) {
             .header h1 { font-size: 2rem; }
+            .header .subtext { font-size: 1rem; }
             .section-title { font-size: 2rem; }
             .adventure-doors { flex-direction: column; }
         }
@@ -335,7 +313,6 @@
 <body>
 
     <canvas id="fractal-background"></canvas>
-
     <button id="toTopBtn" title="Go to top">↑</button>
 
     <div class="container">
@@ -358,10 +335,8 @@
                     <div class="expandable-summary">The "Genesis Protocol": A Deep Regeneration</div>
                     <div class="expandable-content">
                         <p>This is a complete lifestyle reflection and transition protocol. Its core is up to 60 x 2-hour sessions in the Aura Geode, a medical-grade Hyperbaric Oxygen Therapy (HBOT) chamber. Inside, you will build a digital twin of your body and mind via rich biofeedback and deep self-reflection, supplemented by a "choose your own adventure" lifestyle plan.</p>
-                        <div class="geode-preview">
-                            <p>[ Placeholder for looping video of the Aura Geode's ambient interior ]</p>
-                        </div>
-                         <div class="audio-player">
+                        <div class="geode-preview"><p>[ Placeholder for looping video of the Aura Geode's ambient interior ]</p></div>
+                        <div class="audio-player">
                             <p><strong>Listen to the Anthem: "Sixty Days Set in Stone"</strong></p>
                             <p style="font-style: italic; color: var(--text-secondary); margin-top: 10px;">[ Placeholder for embedded audio player ]</p>
                         </div>
@@ -371,9 +346,9 @@
                     <div class="expandable-summary">"Aura Lite": The Open Gate</div>
                     <div class="expandable-content">
                         <p>For most, the journey begins with a simple, mobile-first experience. Create a baseline Digital Twin with our intuitive apps for memory mapping and self-reflection. You can then add granular detail with your own biometric wearables (BYOD) like smart watches or consumer EEGs.</p>
-                        <div class="aura-builder-showcase">
+                        <div class="aura-builder-showcase" style="margin-top: 1.5rem; text-align: center;">
                             <a href="https://auraofintelligence.github.io/aura-components/" target="_blank" rel="noopener noreferrer">
-                                <img src="https://i.imgur.com/8F2aW1g.png" alt="Aura Builder Toy Showcase">
+                                <img src="https://i.imgur.com/8F2aW1g.png" alt="Aura Builder Toy Showcase" style="max-width: 100%; height: auto; border-radius: 8px; border: 1px solid var(--dark-bg);">
                             </a>
                             <p style="font-size: 0.9rem; margin-top: 1rem;">Begin building your own Aura with our early-stage builder tool.</p>
                         </div>
@@ -402,7 +377,7 @@
                  <div class="expandable-section">
                     <div class="expandable-summary">The Catalyst Protocol</div>
                     <div class="expandable-content">
-                        <p>The goal is to transform our finite civilizational game into an infinite one. After your own journey, you can unlock the "Millionaire/Billionaire Aura" protocols—game loops designed to train you as a "Catalyst" for large-scale positive impact.</p>
+                        <p>The goal is to upgrade our civilization from a finite game of "Alpha to Omega"—a story with a mandatory end—to a regenerative, infinite one. After your journey, you can unlock the "Millionaire/Billionaire Aura" protocols to become a "Catalyst," someone equipped to solve global challenges and expand the boundaries of our shared reality, stewarded by the Alpha Infinity Foundation.</p>
                     </div>
                 </div>
                  <div class="expandable-section">
@@ -411,9 +386,7 @@
                         <p>Our ecosystem's economic engine. A global fund dedicated to correcting the &lt;3% VC funding disparity by investing exclusively in the women-led startups that emerge from our network. <a href="https://auraofintelligence.github.io/Queens_Venture/" target="_blank" rel="noopener noreferrer">[Explore the Queens Venture Blueprint]</a></p>
                     </div>
                 </div>
-                <div class="world-map">
-                     <p>[ Placeholder: Live interactive world map showing inquiry locations ]</p>
-                </div>
+                <div class="world-map"><p>[ Placeholder: Live interactive world map showing inquiry locations ]</p></div>
             </section>
 
             <section id="register" class="section">
@@ -429,10 +402,7 @@
                             <option value="partner">Partner with Us</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Your Email</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
+                    <div class="form-group"><label for="email">Your Email</label><input type="email" id="email" name="email" required></div>
                     <div id="developer-options" class="form-group hidden">
                          <label for="device-reg">Help our dev team:</label>
                          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1rem;">Register your device to help us test and validate the BYOD integration. We'll send you details.</p>
@@ -449,31 +419,22 @@
                             <option value="community">Community & Governance</option>
                         </select>
                     </div>
-                    <div id="fractal-seed" class="form-group hidden">
-                         <label for="location">Seed a Local Fractal (Optional)</label>
-                         <input type="text" id="location" name="location" placeholder="Your City, Country">
-                    </div>
+                    <div id="fractal-seed" class="form-group hidden"><label for="location">Seed a Local Fractal (Optional)</label><input type="text" id="location" name="location" placeholder="Your City, Country"></div>
                     <button type="submit" class="submit-btn">Register for the Journey</button>
                 </form>
-                 <div id="form-success" class="hidden" style="text-align: center; margin-top: 2rem; color: var(--accent);">
-                    <p>Thank you. Your inquiry has been logged. The journey has begun.</p>
-                </div>
+                <div id="form-success" class="hidden" style="text-align: center; margin-top: 2rem; color: var(--accent);"><p>Thank you. Your inquiry has been logged. The journey has begun.</p></div>
             </section>
         </main>
 
         <footer class="footer">
-            <div class="footer-links">
-                <a href="https://github.com/auraofintelligence" target="_blank" rel="noopener noreferrer" title="GitHub">
-                    <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                </a>
-                <a href="#" id="discord-link" title="Discord">
-                    <svg viewBox="0 0 24 24"><path d="M20.317 4.3698c-1.315-1.43-3.102-2.3-5.04-2.4498-.022.056-.042.113-.062.1698-1.575.4898-3.033 1.2298-4.324 2.1698-1.922.2-3.71.93-5.078 2.2298-3.04 3.25-3.664 7.63-1.764 11.5398.24.5098.53.9898.87 1.4398 1.575 1.95 3.57 3.22 5.76 3.9398.052.02.104.03.156.04.546.19 1.114.33 1.696.42 1.95.29 3.943.02 5.8-.82-1.252-.47-2.44-1.12-3.535-1.95-.02-.01-.04-.02-.06-.03-.21-.08-.42-.18-.62-.27-.25-.11-.5-.22-.75-.33-1.166-.52-2.26-1.2-3.22-2.05-.28-.24-.55-.5-.81-.76-.04-.04-.08-.08-.12-.12-.01-.01-.02-.02-.03-.03-.33-.29-.63-.6-.9-.92-.23-.26-.45-.52-.65-.8-.11-.15-.2-.3-.3-.45-.02-.03-.04-.06-.06-.09-.07-.13-.14-.26-.2-.4-.01-.02-.02-.04-.03-.06-.05-.1-.09-.2-.13-.3-.02-.05-.04-.1-.06-.15-.03-.08-.06-.16-.09-.24-.01-.03-.02-.06-.03-.09-.03-.08-.05-.16-.08-.24-.03-.09-.06-.18-.08-.27-.01-.02-.01-.04-.02-.06-.04-.13-.08-.26-.12-.39-.02-.07-.04-.14-.06-.21-.02-.07-.03-.14-.05-.21-.02-.08-.04-.16-.06-.24-.02-.08-.03-.16-.05-.24-.02-.09-.04-.18-.06-.27-.01-.03-.01-.05-.02-.08-.04-.17-.08-.34-.12-.51-.02-.08-.04-.17-.06-.25s-.04-.17-.06-.25c-.06-.26-.11-.52-.16-.78-.05-.27-.1-.54-.14-.81-.04-.28-.08-.56-.11-.84-.03-.28-.06-.56-.08-.85-.02-.27-.04-.55-.06-.82-.01-.14-.02-.28-.03-.42-.01-.14-.02-.28-.03-.42-.01-.14-.01-.28-.02-.42s-.01-.28-.02-.42c.01-.14.02-.28.03-.42l.02-.42.03-.42.04-.41.05-.41.06-.4.08-.4.09-.39.1-.38.12-.37.13-.36.15-.35.16-.34.18-.33.19-.32.2-.31.22-.3.23-.29.28-.52.56-1.01 1.25-1.95 2.22-3.22 3.52-4.99z M8.02 15.33c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4zm7.98 0c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4z"/></svg>
-                </a>
+             <div class="footer-links">
+                <a href="https://github.com/auraofintelligence" target="_blank" rel="noopener noreferrer" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg></a>
+                <a href="#" id="discord-link" title="Discord"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698c-1.315-1.43-3.102-2.3-5.04-2.4498-.022.056-.042.113-.062.1698-1.575.4898-3.033 1.2298-4.324 2.1698-1.922.2-3.71.93-5.078 2.2298-3.04 3.25-3.664 7.63-1.764 11.5398.24.5098.53.9898.87 1.4398 1.575 1.95 3.57 3.22 5.76 3.9398.052.02.104.03.156.04.546.19 1.114.33 1.696.42 1.95.29 3.943.02 5.8-.82-1.252-.47-2.44-1.12-3.535-1.95-.02-.01-.04-.02-.06-.03-.21-.08-.42-.18-.62-.27-.25-.11-.5-.22-.75-.33-1.166-.52-2.26-1.2-3.22-2.05-.28-.24-.55-.5-.81-.76-.04-.04-.08-.08-.12-.12-.01-.01-.02-.02-.03-.03-.33-.29-.63-.6-.9-.92-.23-.26-.45-.52-.65-.8-.11-.15-.2-.3-.3-.45-.02-.03-.04-.06-.06-.09-.07-.13-.14-.26-.2-.4-.01-.02-.02-.04-.03-.06-.05-.1-.09-.2-.13-.3-.02-.05-.04-.1-.06-.15-.03-.08-.06-.16-.09-.24-.01-.03-.02-.06-.03-.09-.03-.08-.05-.16-.08-.24-.03-.09-.06-.18-.08-.27-.01-.02-.01-.04-.02-.06-.04-.13-.08-.26-.12-.39-.02-.07-.04-.14-.06-.21-.02-.07-.03-.14-.05-.21-.02-.08-.04-.16-.06-.24-.02-.08-.03-.16-.05-.24-.02-.09-.04-.18-.06-.27-.01-.03-.01-.05-.02-.08-.04-.17-.08-.34-.12-.51-.02-.08-.04-.17-.06-.25s-.04-.17-.06-.25c-.06-.26-.11-.52-.16-.78-.05-.27-.1-.54-.14-.81-.04-.28-.08-.56-.11-.84-.03-.28-.06-.56-.08-.85-.02-.27-.04-.55-.06-.82-.01-.14-.02-.28-.03-.42-.01-.14-.02-.28-.03-.42-.01-.14-.01-.28-.02-.42s-.01-.28-.02-.42c.01-.14.02-.28.03-.42l.02-.42.03-.42.04-.41.05-.41.06-.4.08-.4.09-.39.1-.38.12-.37.13-.36.15-.35.16-.34.18-.33.19-.32.2-.31.22-.3.23-.29.28-.52.56-1.01 1.25-1.95 2.22-3.22 3.52-4.99z M8.02 15.33c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4zm7.98 0c-1.08 0-1.95-1.08-1.95-2.4s.87-2.4 1.95-2.4c1.08 0 1.95 1.08 1.95 2.4s-.87 2.4-1.95 2.4z"/></svg></a>
             </div>
              <p style="font-size: 0.9rem; margin-bottom: 1rem;"><a href="#" id="go-bag-link">[Preview the Aura Odyssey Kits]</a></p>
-             <p>© <span id="year"></span> Alpha Infinity Foundation. An Infinite Game.</p>
+             <p>© <span id="year"></span> <a href="https://alphainfinity.foundation" target="_blank" rel="noopener noreferrer">Alpha Infinity Foundation</a>. An Infinite Game.</p>
              <p style="font-size: 0.8rem; margin-top: 1rem;">
-                This work is licensed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer" style="color: var(--text-secondary);">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+                This work is licensed under a <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener noreferrer">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
             </p>
         </footer>
     </div>
@@ -481,7 +442,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // --- Generative Fractal Background ---
             const canvas = document.getElementById('fractal-background');
             const ctx = canvas.getContext('2d');
             let nodes = [];
@@ -497,11 +457,13 @@
                     y: y || Math.random() * canvas.height,
                     vx: Math.random() * 0.2 - 0.1,
                     vy: Math.random() * 0.2 - 0.1,
-                    connections: 0
                 });
             }
 
             function draw() {
+                if (canvas.width !== window.innerWidth || canvas.height !== window.innerHeight) {
+                    resizeCanvas();
+                }
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
 
                 nodes.forEach((node, i) => {
@@ -534,10 +496,9 @@
             
             window.addEventListener('resize', resizeCanvas);
             resizeCanvas();
-            for(let i = 0; i < 50; i++) { addNode(); } // Initial nodes
+            for(let i = 0; i < 50; i++) { addNode(); }
             draw();
 
-            // --- Days Since Launch Counter ---
             const launchDate = new Date('2025-08-14T00:00:00Z');
             const daysCounter = document.getElementById('days-since-launch');
             
@@ -550,25 +511,19 @@
             updateCounter();
             setInterval(updateCounter, 1000 * 60 * 60 * 24);
 
-            // --- Smooth Scrolling for Doors ---
-            document.querySelectorAll('.door').forEach(anchor => {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 anchor.addEventListener('click', function (e) {
                     e.preventDefault();
-                    document.querySelector(this.getAttribute('href')).scrollIntoView({
-                        behavior: 'smooth'
-                    });
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
                 });
             });
 
-            // --- Expandable Sections ---
             document.querySelectorAll('.expandable-summary').forEach(summary => {
                 summary.addEventListener('click', () => {
-                    const section = summary.parentElement;
-                    section.classList.toggle('open');
+                    summary.parentElement.classList.toggle('open');
                 });
             });
             
-            // --- Dynamic Registration Form ---
             const callingSelect = document.getElementById('calling');
             const developerOptions = document.getElementById('developer-options');
             const catalystOptions = document.getElementById('catalyst-options');
@@ -580,49 +535,33 @@
                 catalystOptions.classList.add('hidden');
                 fractalSeed.classList.add('hidden');
 
-                if (value) {
-                    fractalSeed.classList.remove('hidden');
-                }
-                if (value === 'developer') {
-                    developerOptions.classList.remove('hidden');
-                } else if (value === 'catalyst') {
-                    catalystOptions.classList.remove('hidden');
-                }
+                if (value) fractalSeed.classList.remove('hidden');
+                if (value === 'developer') developerOptions.classList.remove('hidden');
+                if (value === 'catalyst') catalystOptions.classList.remove('hidden');
             });
 
-            // --- Form Submission ---
             const form = document.getElementById('genesis-form');
             const formSuccess = document.getElementById('form-success');
             form.addEventListener('submit', (e) => {
                 e.preventDefault();
-                const locationInput = document.getElementById('location').value;
-                const location = locationInput ? locationInput.split(',').map(s => s.trim()) : [];
-                
                 console.log('Form submitted:', new FormData(form));
                 form.style.display = 'none';
                 formSuccess.classList.remove('hidden');
-                
-                // Add a new node to the fractal map
-                addNode(Math.random() * canvas.width, Math.random() * canvas.height);
+                addNode();
             });
 
-            // --- Back to Top Button ---
             const toTopBtn = document.getElementById("toTopBtn");
-            window.onscroll = function() {
+            window.onscroll = () => {
                 if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                     toTopBtn.style.display = "block";
                 } else {
                     toTopBtn.style.display = "none";
                 }
             };
-            toTopBtn.addEventListener('click', () => {
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            });
+            toTopBtn.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
 
-            // --- Set Current Year in Footer ---
             document.getElementById('year').textContent = new Date().getFullYear();
             
-            // --- Placeholder Links ---
             document.getElementById('go-bag-link').addEventListener('click', (e) => {
                 e.preventDefault();
                 alert("The Catalyst's Digital Go-Bag will be available soon. It will contain the Master Design Document, art assets, and a link to the community Discord.");
@@ -631,7 +570,6 @@
                 e.preventDefault();
                 alert("The community Discord is being set up. The link will be live soon!");
             });
-
         });
     </script>
 
